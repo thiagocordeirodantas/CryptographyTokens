@@ -1,4 +1,5 @@
 import { scryptSync, randomBytes, timingSafeEqual } from 'crypto'
+import chalk from 'chalk';
 
 function criaHashComSal(senha){
     const sal = randomBytes(16).toString('hex');
@@ -21,23 +22,21 @@ class Usuario{
             const hashesCorrespondem = timingSafeEqual(testeHash, hashReal)
 
             if (hashesCorrespondem){
-                console.log("Usuário autenticado com sucesso")
+                console.log(chalk.green("Usuário autenticado com sucesso"))
                 return true;
             }
         }
 
-        console.log("Usuário ou senha incorretos.")
+        console.log(chalk.red("Usuário ou senha incorretos."))
         return false;
     }
 }
 
 const thiago = new Usuario('Thiago', 'cordeiro98')
 
-console.log(thiago)
-
 // Teste de sucesso
 thiago.autentica('Thiago', 'cordeiro98')
 
 // Testes de insucesso
-thiago.autentica('Jm', 'senhaSecreta')
-thiago.autentica('Jm', 'senhaErrada')
+thiago.autentica('th', 'senhaSecreta')
+thiago.autentica('th', 'senhaErrada')
